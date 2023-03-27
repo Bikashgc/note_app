@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'add_note.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           debugPrint('add note button clicked');
+          navigateToAddNote('Add Note');
         },
         tooltip: 'Add a note',
         child: Icon(Icons.add),
@@ -50,10 +53,17 @@ class _HomePageState extends State<HomePage> {
             ),
             onTap: () {
               debugPrint("List Tile clicked");
+              navigateToAddNote('Edit Note');
             },
           ),
         );
       },
     );
+  }
+
+  void navigateToAddNote(String title) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return AddNote(title);
+    }));
   }
 }
