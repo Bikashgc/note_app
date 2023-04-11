@@ -6,7 +6,7 @@ import 'package:note_app/models/note.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper = DatabaseHelper._createInstance();
-  static late Database _database;
+  late Database _database;
 
   String noteTable = 'note_table';
   String colId = 'id';
@@ -88,5 +88,19 @@ class DatabaseHelper {
         await db.rawQuery('SELECT COUNT(*) FROM $noteTable');
     int? result = Sqflite.firstIntValue(x);
     return result;
+  }
+
+  // Get the 'Map List' [List<Map>] and convert it to 'Note List' [List<Note>]
+  Future<List<Note>> getNoteList() async {
+    var noteMapList = await getNoteMapList(); //Get 'Map List' f4rom database
+    int count =
+        noteMapList.length; // Count the number of map entries in db table
+
+    List<Note> noteList = [];
+    // For loop to create 'Note List' from a 'Map List'
+    for (int i = 0; i < count; i++) {
+      noteList.add(Note.fromMapObject(noteMapList[i]));
+    }
+    return noteList;
   }
 }
