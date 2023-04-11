@@ -27,6 +27,12 @@ class _AddNoteState extends State<AddNote> {
   _AddNoteState(this.note, this.appBarTitle);
 
   @override
+  void dispose() {
+    // Cancel any active asynchronous operations here
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.headline6!;
 
@@ -242,14 +248,10 @@ class _AddNoteState extends State<AddNote> {
   }
 
   void _showAlertDialog(String title, String message) {
-    AlertDialog alertDialog = AlertDialog as AlertDialog;
-    {
-      title:
-      Text(title);
-      content:
-      Text(message);
-    }
-    ;
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
     showDialog(context: context, builder: (_) => alertDialog);
   }
 }
